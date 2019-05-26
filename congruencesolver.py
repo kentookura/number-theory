@@ -24,8 +24,8 @@ def isolve(a,b,c):
         v = sol[1]
         return( [ v, u - q*v ] )
 
-def solveCongruence(Verbose=False):
-    a = [int(x) for x in input("enter 3 numbers (a, b, m): ").split()]
+def solveCongruence(a, Verbose=False):
+
     d = m.gcd(a[0], a[2])
     # solve equation d = (x'*a)+(k'*m)
     f = isolve(a[0], a[2], d)
@@ -42,16 +42,7 @@ def solveCongruence(Verbose=False):
         for i in range(d):
             print(int(solution + i * c) % a[2])
 
-def solvegeneralSystem():
-    # read in coefficients of a system of linear congruences in arrays
-    i = int(input("how many equations? "))
-    M = [int(x) for x in input("enter moduli: ").split()]
-    # exit if moduli are not coprime (no solutions)
-    if not coprime(M):
-        print('moduli are not comprime')
-        pass
-    B = [int(x) for x in input("enter B's: ").split()]
-
+def solvegeneralSystem(i, B, M):
 
     # generate array of new coefficients m[i] = prod(M)/M[i]
     m = [np.prod(M)/M[j] for j in range(i)]
@@ -62,8 +53,28 @@ def solvegeneralSystem():
     finalsol = int([sum(prod)]%np.prod(M))
     print(finalsol)
 
-def solvespecialSystem():
+def solvespecialSystem(i, A, B, M):
+    D = [m.gcd(A[j], M[j]) for j in range(i)]
+    f = [isolve(A[j], M[j], D[j]) for j in range(i)]
+    print(f)
 
+def solveCongruenceinput():
+    a = [int(x) for x in input("enter 3 numbers (a, b, m): ").split()]
+    solveCongruence(a, Verbose = True)
+
+def solvegeneralSysteminput():
+# read in coefficients of a system of linear congruences in arrays
+    i = int(input("how many equations? "))
+    M = [int(x) for x in input("enter moduli: ").split()]
+    # exit if moduli are not coprime (no solutions)
+    if not coprime(M):
+        print('moduli are not comprime')
+        pass
+    B = [int(x) for x in input("enter B's: ").split()]
+
+    solvegeneralSystem(i, B, M)
+
+def solvespecialSysteminput():
     i = int(input("how many equations? "))
     M = [int(x) for x in input("enter moduli: ").split()]
     if not coprime(M):
@@ -71,9 +82,8 @@ def solvespecialSystem():
         pass
     A = [int(x) for x in input("enter a's: ").split()]
     B = [int(x) for x in input("enter b's: ").split()]
-    D = [m.gcd(A[j], M[j]) for j in range(i)]
-    f = [isolve[A[j], M[j], D[j]] for j in range i]
-    print(f)
+
+    solvespecialSystem(i, A, B, M)
 
 def Help():
     print("""1: solve a linear congruence of the form ax\u2261b(mod m)\n
@@ -81,9 +91,9 @@ def Help():
 3: solve a system of linear congruences ax\u2261bi(mod mi)""")
 
 function_dict = {
-    '1' : solveCongruence,
-    '2' : solvegeneralSystem,
-    '3' : solvespecialSystem,
+    '1' : solveCongruenceinput,
+    '2' : solvegeneralSysteminput,
+    '3' : solvespecialSysteminput,
     'h' : Help,
     'q' : sys.exit
 }
