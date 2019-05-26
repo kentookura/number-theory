@@ -27,7 +27,7 @@ def isolve(a,b,c):
 def solveCongruence(a, Verbose=False):
 
     d = m.gcd(a[0], a[2])
-    # solve equation d = (x'*a)+(k'*m)
+    # solve equation (x'*a)+(k'*m) = d
     f = isolve(a[0], a[2], d)
 
     solution = int(f[0]*a[1]/d)
@@ -55,15 +55,18 @@ def solvegeneralSystem(i, B, M):
 
 def solvespecialSystem(i, A, B, M):
     D = [m.gcd(A[j], M[j]) for j in range(i)]
-    f = [isolve(A[j], M[j], D[j]) for j in range(i)]
-    print(f)
+    f = [isolve(A[j]/D[j], M[j]/D[j], 1) for j in range(i)]
+    C = [f[j][0] for j in range(i)]
+    # convert equations to general form and solve using solvegeneralSystem
+    newB, newM = [B[j]/D[j]*C[j]], [M[j]/D[j]] for j in range(i)
+    solvegeneralSystem(i, newB, newM)
 
 def solveCongruenceinput():
     a = [int(x) for x in input("enter 3 numbers (a, b, m): ").split()]
     solveCongruence(a, Verbose = True)
 
 def solvegeneralSysteminput():
-# read in coefficients of a system of linear congruences in arrays
+    # read in coefficients of a system of linear congruences in arrays
     i = int(input("how many equations? "))
     M = [int(x) for x in input("enter moduli: ").split()]
     # exit if moduli are not coprime (no solutions)
