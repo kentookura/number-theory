@@ -75,6 +75,11 @@ def solvegeneralSysteminput():
 
     solvegeneralSystem(i, B, M)
 
+    check = input('verify?(enter to skip)')
+    if check == True:
+        for j in range(i):
+            print('{}(mod{}) = {}'.format(finalsol, M[j], finalsol%M[j]))
+
 def solvespecialSysteminput():
     i = int(input("how many equations? "))
     M = [int(x) for x in input("enter moduli: ").split()]
@@ -84,6 +89,10 @@ def solvespecialSysteminput():
     B = [int(x) for x in input("enter b's: ").split()]
 
     solvespecialSystem(i, A, B, M)
+    check = input('verify?(enter to skip)')
+    if check == True:
+        for j in range(i):
+            print('{}*{}(mod{}) = {}'.format(A[j], finalsol, M[j], A[j]*finalsol%M[j]))
 
 def Help():
     print("""1: solve a linear congruence of the form ax\u2261b(mod m)\n
