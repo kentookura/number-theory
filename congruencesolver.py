@@ -49,15 +49,15 @@ def solvegeneralSystem(i, B, M):
     # construct final solution by multiplying indexwise, summing the array and "modding out"
     prod = [B[j]*m[j]*sol[j] for j in range(i)]
     finalsol = int([sum(prod)]%np.prod(M))
-    print(finalsol)
+    return finalsol
 
 def solvespecialSystem(i, A, B, M):
     D = [m.gcd(A[j], M[j]) for j in range(i)]
     f = [isolve(A[j]/D[j], M[j]/D[j], 1) for j in range(i)]
     C = [f[j][0] for j in range(i)]
     # convert equations to general form and solve using solvegeneralSystem
-    newB = [B[j]/D[j]*C[j] for j in range(i)]
-    newM = [M[j]/D[j] for j in range(i)]
+    newB = [int(B[j]/D[j]*C[j]) for j in range(i)]
+    newM = [int(M[j]/D[j]) for j in range(i)]
     solvegeneralSystem(i, newB, newM)
 
 def solveCongruenceinput():
@@ -73,10 +73,11 @@ def solvegeneralSysteminput():
         print('moduli are not comprime')
     B = [int(x) for x in input("enter B's: ").split()]
 
-    solvegeneralSystem(i, B, M)
+    finalsol = solvegeneralSystem(i, B, M)
+    print(finalsol)
 
-    check = input('verify?(enter to skip)')
-    if check == True:
+    check = input('v to verify\n')
+    if check == 'v':
         for j in range(i):
             print('{}(mod{}) = {}'.format(finalsol, M[j], finalsol%M[j]))
 
@@ -88,9 +89,11 @@ def solvespecialSysteminput():
     A = [int(x) for x in input("enter a's: ").split()]
     B = [int(x) for x in input("enter b's: ").split()]
 
-    solvespecialSystem(i, A, B, M)
-    check = input('verify?(enter to skip)')
-    if check == True:
+    finalsol = solvespecialSystem(i, A, B, M)
+    print(finalsol)
+
+    check = input('v to verify\n')
+    if check == 'v':
         for j in range(i):
             print('{}*{}(mod{}) = {}'.format(A[j], finalsol, M[j], A[j]*finalsol%M[j]))
 
