@@ -13,8 +13,8 @@ def coprime(a):
     if all(n == 1 for n in gcds):
         return True
 
-# isolve solves diophantine equations of the form ax + by = c and returns [x, y]
-def isolve(a,b,c):
+
+def isolve(a,b,c):                                                   # isolve solves diophantine equations of the form ax + by = c and returns [x, y]
     q, r = divmod(a,b)
     if r == 0:
         return( [0,c/b] )
@@ -27,8 +27,7 @@ def isolve(a,b,c):
 def solveCongruence(a, Verbose=False):
 
     d = m.gcd(int(a[0]), int(a[2]))
-    # solve equation (x'*a)+(k'*m) = d
-    f = isolve(a[0], a[2], d)
+    f = isolve(a[0], a[2], d)                                        # solve equation (x'*a)+(k'*m) = d
     solution = int(f[0]*a[1]/d)
     c = int(a[1]/d)
 
@@ -42,12 +41,9 @@ def solveCongruence(a, Verbose=False):
 
 def solvegeneralSystem(i, B, M):
 
-    # generate array of new coefficients m[i] = prod(M)/M[i]
-    m = [int(np.prod(M)/M[j]) for j in range(i)]
-    # create array of solutions of new congruences with new coefficients
-    sol = [solveCongruence([m[j], 1, M[j]]) for j in range(i)]
-    # construct final solution by multiplying indexwise, summing the array and "modding out"
-    prod = [B[j]*m[j]*sol[j] for j in range(i)]
+    m = [int(np.prod(M)/M[j]) for j in range(i)]                        # generate array of new coefficients m[i] = prod(M)/M[i]
+    sol = [solveCongruence([m[j], 1, M[j]]) for j in range(i)]          # create array of solutions of new congruences with new coefficients
+    prod = [B[j]*m[j]*sol[j] for j in range(i)]                         # construct final solution by multiplying indexwise, summing the array and "modding out"
     finalsol = int([sum(prod)]%np.prod(M))
     return finalsol
 
@@ -55,21 +51,19 @@ def solvespecialSystem(i, A, B, M):
     D = [m.gcd(A[j], M[j]) for j in range(i)]
     f = [isolve(A[j]/D[j], M[j]/D[j], 1) for j in range(i)]
     C = [f[j][0] for j in range(i)]
-    # convert equations to general form and solve using solvegeneralSystem
-    newB = [int(B[j]/D[j]*C[j]) for j in range(i)]
+    newB = [int(B[j]/D[j]*C[j]) for j in range(i)]                     # convert equations to general form and solve using solvegeneralSystem
     newM = [int(M[j]/D[j]) for j in range(i)]
-    solvegeneralSystem(i, newB, newM)
+    return solvegeneralSystem(i, newB, newM)
 
 def solveCongruenceinput():
     a = [int(x) for x in input("enter 3 numbers (a, b, m): ").split()]
     solveCongruence(a, Verbose = True)
 
 def solvegeneralSysteminput():
-    # read in coefficients of a system of linear congruences in arrays
-    i = int(input("how many equations? "))
+
+    i = int(input("how many equations? "))                             # read in coefficients of a system of linear congruences in arrays
     M = [int(x) for x in input("enter moduli: ").split()]
-    # exit if moduli are not coprime (no solutions)
-    if not coprime(M):
+    if not coprime(M):                                                 # exit if moduli are not coprime (no solutions)
         print('moduli are not comprime')
     B = [int(x) for x in input("enter B's: ").split()]
 
