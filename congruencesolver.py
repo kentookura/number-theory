@@ -8,7 +8,7 @@ import math as m
 import sys
 
 
-def coprime(a):
+def coprime(a):                                                      # test if a given list contains only coprime integers
     gcds = [m.gcd(i, j) for i in a for j in a if i != j]
     if all(n == 1 for n in gcds):
         return True
@@ -26,15 +26,15 @@ def isolve(a,b,c):                                                   # isolve so
 
 def solveCongruence(a, Verbose=False):
 
-    d = m.gcd(int(a[0]), int(a[2]))
+    d = m.gcd(int(a[0]), int(a[2]))                                  # creates list of greates common divisor of first coefficients and moduli
     f = isolve(a[0], a[2], d)                                        # solve equation (x'*a)+(k'*m) = d
-    solution = int(f[0]*a[1]/d)
+    solution = int(f[0]*a[1]/d)                                      # extracts first entry of solution array (x')
     c = int(a[1]/d)
 
     for i in range(int(d)):
             return int((solution + i * c) % a[2])
 
-    if Verbose:
+    if Verbose:                                                      # this option prints all incongruent solutions and is enabled by solveCongruenceinput
         print("the equation %d x \u2261 %d mod %d has " %(a[0], a[1], a[2]), int((d%a[2])), " solutions.")
         for i in range(d):
             print(int(solution + i * c) % a[2])
@@ -62,10 +62,10 @@ def solveCongruenceinput():
 def solvegeneralSysteminput():
 
     i = int(input("how many equations? "))                             # read in coefficients of a system of linear congruences in arrays
+    B = [int(x) for x in input("enter B's: ").split()]
     M = [int(x) for x in input("enter moduli: ").split()]
     if not coprime(M):                                                 # exit if moduli are not coprime (no solutions)
         print('moduli are not comprime')
-    B = [int(x) for x in input("enter B's: ").split()]
 
     finalsol = solvegeneralSystem(i, B, M)
     print(finalsol)
@@ -77,11 +77,11 @@ def solvegeneralSysteminput():
 
 def solvespecialSysteminput():
     i = int(input("how many equations? "))
+    A = [int(x) for x in input("enter a's: ").split()]
+    B = [int(x) for x in input("enter b's: ").split()]
     M = [int(x) for x in input("enter moduli: ").split()]
     if not coprime(M):
         print('moduli are not comprime')
-    A = [int(x) for x in input("enter a's: ").split()]
-    B = [int(x) for x in input("enter b's: ").split()]
 
     finalsol = solvespecialSystem(i, A, B, M)
     print(finalsol)
@@ -107,4 +107,3 @@ print('What would you like to do? (enter h for more info, q to quit)')
 while True:
     option = input()
     func = function_dict.get(option, lambda: 'invalid option')()
-    func()
