@@ -98,7 +98,7 @@ it handles user input, exception handling and outputting of solutions
 and print them out.'''
 
 
-def solveCongruenceinput():
+def Congruenceinput():
     a = [int(x) for x in input("Enter 3 numbers (a, b, m): ").split()]
     d = int(m.gcd(int(a[0]), int(a[2])))
 
@@ -122,7 +122,7 @@ def solveCongruenceinput():
         return
 
 
-def solvespecialSysteminput():
+def specialSysteminput():
 
     i = int(input("How many equations? "))
     B = [int(x) for x in input("Enter B's: ").split()]
@@ -142,7 +142,7 @@ def solvespecialSysteminput():
         return
 
 
-def solvegeneralSysteminput():
+def generalSysteminput():
     i = int(input("how many equations? "))
     A = [int(x) for x in input("enter a's: ").split()]
     B = [int(x) for x in input("enter b's: ").split()]
@@ -169,9 +169,9 @@ def Help():
 3: solve a system of linear congruences a\u1d62x\u2261b\u1d62(mod m\u1d62)""")
 
 function_dict = {
-    '1': solveCongruenceinput,
-    '2': solvegeneralSysteminput,
-    '3': solvespecialSysteminput,
+    '1': Congruenceinput,
+    '2': specialSysteminput,
+    '3': generalSysteminput,
     'h': Help,
     'q': sys.exit
 }
