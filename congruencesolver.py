@@ -1,3 +1,4 @@
+#!/bin/usr/python
 import numpy as np
 import math as m
 import sys
