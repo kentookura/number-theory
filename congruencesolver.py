@@ -109,7 +109,7 @@ def Congruenceinput():
         return
 
     print("The equation %d x \u2261 %d mod %d has "
-          % (a[0], a[1], a[2]), int((d % [2])), " solutions.")
+          % (a[0], a[1], a[2]), int((d % a[2])), " solutions.")
 
     solution = solveCongruence(a)
     for number in solution:
